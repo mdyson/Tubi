@@ -7,12 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5039EA57918984FF34C4ADF6 /* Pods_TubiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBFCD078BE4328ECB3181784 /* Pods_TubiTests.framework */; };
+		83910AB4E6E8943D7C5AEB8E /* Pods_Tubi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8C7C19658B6E2C0C16A7ABD /* Pods_Tubi.framework */; };
+		C8056E322249EA1F00CEEE24 /* MovieCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8056E312249EA1F00CEEE24 /* MovieCollectionViewCell.swift */; };
+		C8056E352249F0AA00CEEE24 /* UIImageViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8056E342249F0AA00CEEE24 /* UIImageViewExtensions.swift */; };
+		C8056E382249F38800CEEE24 /* MovieSearchItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8056E372249F38800CEEE24 /* MovieSearchItem.swift */; };
 		C8516E382249D588001E7A6C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8516E372249D588001E7A6C /* AppDelegate.swift */; };
-		C8516E3A2249D588001E7A6C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8516E392249D588001E7A6C /* ViewController.swift */; };
 		C8516E3F2249D58B001E7A6C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8516E3E2249D58B001E7A6C /* Assets.xcassets */; };
 		C8516E422249D58B001E7A6C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C8516E402249D58B001E7A6C /* LaunchScreen.storyboard */; };
 		C8516E4D2249D58B001E7A6C /* LRUCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8516E4C2249D58B001E7A6C /* LRUCacheTests.swift */; };
 		C8516E582249D72C001E7A6C /* LRUCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8516E572249D72C001E7A6C /* LRUCache.swift */; };
+		C8516E602249DFB9001E7A6C /* TubiAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8516E5F2249DFB9001E7A6C /* TubiAPI.swift */; };
+		C8516E622249E819001E7A6C /* MoviesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8516E612249E819001E7A6C /* MoviesViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,9 +32,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2F9810D78F549921F8B47EF8 /* Pods-TubiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TubiTests.release.xcconfig"; path = "Target Support Files/Pods-TubiTests/Pods-TubiTests.release.xcconfig"; sourceTree = "<group>"; };
+		4D4915C1924D2306F2C7BFDB /* Pods-Tubi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tubi.debug.xcconfig"; path = "Target Support Files/Pods-Tubi/Pods-Tubi.debug.xcconfig"; sourceTree = "<group>"; };
+		563B3D4BE66CB17DF2D3F947 /* Pods-Tubi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tubi.release.xcconfig"; path = "Target Support Files/Pods-Tubi/Pods-Tubi.release.xcconfig"; sourceTree = "<group>"; };
+		B415B2D5FA3E9FAB6C8D1A0A /* Pods-TubiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TubiTests.debug.xcconfig"; path = "Target Support Files/Pods-TubiTests/Pods-TubiTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C8056E312249EA1F00CEEE24 /* MovieCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewCell.swift; sourceTree = "<group>"; };
+		C8056E342249F0AA00CEEE24 /* UIImageViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewExtensions.swift; sourceTree = "<group>"; };
+		C8056E372249F38800CEEE24 /* MovieSearchItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSearchItem.swift; sourceTree = "<group>"; };
 		C8516E342249D588001E7A6C /* Tubi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tubi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8516E372249D588001E7A6C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C8516E392249D588001E7A6C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		C8516E3E2249D58B001E7A6C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C8516E412249D58B001E7A6C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C8516E432249D58B001E7A6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -36,6 +48,10 @@
 		C8516E4C2249D58B001E7A6C /* LRUCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LRUCacheTests.swift; sourceTree = "<group>"; };
 		C8516E4E2249D58B001E7A6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C8516E572249D72C001E7A6C /* LRUCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LRUCache.swift; sourceTree = "<group>"; };
+		C8516E5F2249DFB9001E7A6C /* TubiAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TubiAPI.swift; sourceTree = "<group>"; };
+		C8516E612249E819001E7A6C /* MoviesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviesViewController.swift; sourceTree = "<group>"; };
+		CBFCD078BE4328ECB3181784 /* Pods_TubiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TubiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D8C7C19658B6E2C0C16A7ABD /* Pods_Tubi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tubi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83910AB4E6E8943D7C5AEB8E /* Pods_Tubi.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -50,18 +67,65 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5039EA57918984FF34C4ADF6 /* Pods_TubiTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1FC09901BDB10559FB8E7C5F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4D4915C1924D2306F2C7BFDB /* Pods-Tubi.debug.xcconfig */,
+				563B3D4BE66CB17DF2D3F947 /* Pods-Tubi.release.xcconfig */,
+				B415B2D5FA3E9FAB6C8D1A0A /* Pods-TubiTests.debug.xcconfig */,
+				2F9810D78F549921F8B47EF8 /* Pods-TubiTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		4F7FFD01653ECBED76AB0105 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D8C7C19658B6E2C0C16A7ABD /* Pods_Tubi.framework */,
+				CBFCD078BE4328ECB3181784 /* Pods_TubiTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C8056E302249EA0400CEEE24 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				C8056E312249EA1F00CEEE24 /* MovieCollectionViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		C8056E332249F09700CEEE24 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C8056E342249F0AA00CEEE24 /* UIImageViewExtensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		C8056E362249F35900CEEE24 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C8056E372249F38800CEEE24 /* MovieSearchItem.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		C8516E2B2249D588001E7A6C = {
 			isa = PBXGroup;
 			children = (
 				C8516E362249D588001E7A6C /* Tubi */,
 				C8516E4B2249D58B001E7A6C /* TubiTests */,
 				C8516E352249D588001E7A6C /* Products */,
+				1FC09901BDB10559FB8E7C5F /* Pods */,
+				4F7FFD01653ECBED76AB0105 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -78,11 +142,13 @@
 			isa = PBXGroup;
 			children = (
 				C8516E372249D588001E7A6C /* AppDelegate.swift */,
-				C8516E572249D72C001E7A6C /* LRUCache.swift */,
-				C8516E392249D588001E7A6C /* ViewController.swift */,
-				C8516E3E2249D58B001E7A6C /* Assets.xcassets */,
-				C8516E402249D58B001E7A6C /* LaunchScreen.storyboard */,
-				C8516E432249D58B001E7A6C /* Info.plist */,
+				C8056E302249EA0400CEEE24 /* Cells */,
+				C8516E5B2249DA0F001E7A6C /* Data Structures */,
+				C8056E332249F09700CEEE24 /* Extensions */,
+				C8056E362249F35900CEEE24 /* Models */,
+				C8516E5C2249DA29001E7A6C /* Network */,
+				C8516E5A2249D9ED001E7A6C /* Resources */,
+				C8516E592249D9DB001E7A6C /* View Controllers */,
 			);
 			path = Tubi;
 			sourceTree = "<group>";
@@ -96,6 +162,40 @@
 			path = TubiTests;
 			sourceTree = "<group>";
 		};
+		C8516E592249D9DB001E7A6C /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C8516E612249E819001E7A6C /* MoviesViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		C8516E5A2249D9ED001E7A6C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C8516E3E2249D58B001E7A6C /* Assets.xcassets */,
+				C8516E432249D58B001E7A6C /* Info.plist */,
+				C8516E402249D58B001E7A6C /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		C8516E5B2249DA0F001E7A6C /* Data Structures */ = {
+			isa = PBXGroup;
+			children = (
+				C8516E572249D72C001E7A6C /* LRUCache.swift */,
+			);
+			path = "Data Structures";
+			sourceTree = "<group>";
+		};
+		C8516E5C2249DA29001E7A6C /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				C8516E5F2249DFB9001E7A6C /* TubiAPI.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -103,9 +203,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C8516E512249D58B001E7A6C /* Build configuration list for PBXNativeTarget "Tubi" */;
 			buildPhases = (
+				8B7774A0642E256B32D4FA2A /* [CP] Check Pods Manifest.lock */,
 				C8516E302249D588001E7A6C /* Sources */,
 				C8516E312249D588001E7A6C /* Frameworks */,
 				C8516E322249D588001E7A6C /* Resources */,
+				0333F7C9A3D6B3FCBFABD192 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -120,6 +222,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C8516E542249D58B001E7A6C /* Build configuration list for PBXNativeTarget "TubiTests" */;
 			buildPhases = (
+				1C1BD7A878C16BA3FC7AF238 /* [CP] Check Pods Manifest.lock */,
 				C8516E442249D58B001E7A6C /* Sources */,
 				C8516E452249D58B001E7A6C /* Frameworks */,
 				C8516E462249D58B001E7A6C /* Resources */,
@@ -191,13 +294,86 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0333F7C9A3D6B3FCBFABD192 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Tubi/Pods-Tubi-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Tubi/Pods-Tubi-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		1C1BD7A878C16BA3FC7AF238 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TubiTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8B7774A0642E256B32D4FA2A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Tubi-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		C8516E302249D588001E7A6C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				C8516E582249D72C001E7A6C /* LRUCache.swift in Sources */,
-				C8516E3A2249D588001E7A6C /* ViewController.swift in Sources */,
+				C8516E622249E819001E7A6C /* MoviesViewController.swift in Sources */,
+				C8056E382249F38800CEEE24 /* MovieSearchItem.swift in Sources */,
+				C8056E322249EA1F00CEEE24 /* MovieCollectionViewCell.swift in Sources */,
+				C8516E602249DFB9001E7A6C /* TubiAPI.swift in Sources */,
+				C8056E352249F0AA00CEEE24 /* UIImageViewExtensions.swift in Sources */,
 				C8516E382249D588001E7A6C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -350,10 +526,12 @@
 		};
 		C8516E522249D58B001E7A6C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4D4915C1924D2306F2C7BFDB /* Pods-Tubi.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = Tubi/Info.plist;
+				DEVELOPMENT_TEAM = S2962X95VM;
+				INFOPLIST_FILE = Tubi/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -367,10 +545,12 @@
 		};
 		C8516E532249D58B001E7A6C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 563B3D4BE66CB17DF2D3F947 /* Pods-Tubi.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = Tubi/Info.plist;
+				DEVELOPMENT_TEAM = S2962X95VM;
+				INFOPLIST_FILE = Tubi/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -384,6 +564,7 @@
 		};
 		C8516E552249D58B001E7A6C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B415B2D5FA3E9FAB6C8D1A0A /* Pods-TubiTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -404,6 +585,7 @@
 		};
 		C8516E562249D58B001E7A6C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2F9810D78F549921F8B47EF8 /* Pods-TubiTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
