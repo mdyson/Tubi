@@ -8,10 +8,11 @@
 
 import Foundation
 
-class MovieSearchItem: Codable {
+struct MovieItem: Codable {
     let title: String
     let id: String
     let image: String
+    let index: Int?
     
     var imageUrl: URL? {
         return URL(string: image)
