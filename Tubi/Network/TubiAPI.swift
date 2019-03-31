@@ -25,10 +25,7 @@ class TubiAPI {
 
     func get<T>(_ type: T.Type, endpoint: String) -> Observable<T?> where T : Decodable {
         guard let url = URL(string: endpoint) else {
-            return Observable.create({ observer in
-                observer.onError(APIError.urlError)
-                return Disposables.create()
-            })
+            return Observable.error(APIError.urlError)
         }
         return URLSession.shared.rx.data(request: URLRequest(url: url)).map({ data -> T? in
             return try? JSONDecoder().decode(type, from: data)
