@@ -21,7 +21,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     let movieItem = BehaviorRelay<MovieItem?>(value: nil)
     
     override init(frame: CGRect) {
@@ -44,7 +44,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
 
         movieItem.asObservable().subscribe(onNext: { [weak self] movieItem in
             if let imageUrl = movieItem?.imageUrl {
-                self?.imageView.setImage(from: imageUrl)
+                self?.imageView.setImage(from: imageUrl).disposed(by: self!.disposeBag)
             }
             self?.titleLabel.text = movieItem?.title
         }).disposed(by: disposeBag)
@@ -53,4 +53,11 @@ class MovieCollectionViewCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+//    override func prepareForReuse() {
+//        super.prepareForReuse()
+//        //imageView.image = nil
+//        //titleLabel.text = nil
+//        disposeBag = DisposeBag()
+//    }
 }

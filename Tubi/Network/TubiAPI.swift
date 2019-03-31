@@ -6,8 +6,8 @@
 //  Copyright © 2019 Matthew Dyson. All rights reserved.
 //
 
-import Alamofire
 import Foundation
+import RxCocoa
 import RxSwift
 
 class TubiAPI {
@@ -23,21 +23,9 @@ class TubiAPI {
         }
     }
 
-    let decoder = JSONDecoder()
-
     func get<T>(_ type: T.Type, endpoint: String) -> Observable<T?> where T : Decodable {
-        return Observable.create({ observer -> Disposable in
-            Alamofire.request(endpoint).responseData { [weak self] response in
-                guard let data = response.result.value else {
-                    observer.on(.next(nil))
-                    return
-                }
-                let responseData = try? self?.decoder.decode(type, from: data)
-                DispatchQueue.main.async {
-                    observer.on(.next(responseData))
-                }
-            }
-            return Disposables.create()
-        })
+        return URLSession.shared.rx.data(request: URLRequest(url: URL(string: endpoint)!)).map({ data -> T? in
+            return try? JSONDecoder().decode(type, from: data)
+        }).observeOn(MainScheduler.instance)
     }
 }

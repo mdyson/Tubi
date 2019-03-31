@@ -6,21 +6,26 @@
 //  Copyright © 2019 Matthew Dyson. All rights reserved.
 //
 
-import Alamofire
+import RxCocoa
+import RxSwift
 import UIKit
 
 extension UIImageView {
     // a basic async fetch image
-    func setImage(from url: URL, placeholder: UIImage? = nil) {
-        self.image = placeholder
-        Alamofire.request(url).responseData { [weak self] response in
-            guard let data = response.result.value else {
-                return
-            }
-            let image = UIImage(data: data)
-            DispatchQueue.main.async {
-                self?.image = image
-            }
+    func setImage(from url: URL, placeholder: UIImage? = nil) -> Disposable {
+        image = placeholder
+        return URLSession.shared.rx.data(request: URLRequest(url: url))
+            .map { UIImage(data: $0) }
+            .ifEmpty(default: placeholder)
+            .observeOn(MainScheduler.instance)
+            .bind(to: rx.image)
+    }
+}
+
+extension Reactive where Base: UIImageView {
+    public var imageUrl: Binder<URL?> {
+        return Binder(base) { imageView, url in
+            _ = imageView.setImage(from: url!)
         }
     }
 }

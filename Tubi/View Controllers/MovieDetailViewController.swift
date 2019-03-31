@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RxCocoa
 import RxSwift
 
 class MovieDetailViewController: UIViewController {
@@ -22,7 +23,9 @@ class MovieDetailViewController: UIViewController {
         label.font = .boldSystemFont(ofSize: 30)
         return label
     }()
-    
+
+    private var movieItem = BehaviorRelay<MovieItem?>(value: nil)
+
     init(movieId: String, services: Services) {
         self.movieId = movieId
         self.services = services
@@ -52,18 +55,26 @@ class MovieDetailViewController: UIViewController {
             make.centerX.equalTo(view)
             make.top.equalTo(imageView.snp_bottom).offset(10)
         }
+
+        movieItem.asObservable().subscribe(onNext: { [weak self] movieItem in
+            guard let strongSelf = self,
+                let movieItem = movieItem,
+                let imageUrl = movieItem.imageUrl,
+                let index = movieItem.index else {
+                return
+            }
+            strongSelf.imageView.setImage(from: imageUrl).disposed(by: strongSelf.disposeBag)
+            strongSelf.titleLabel.text = movieItem.title
+            strongSelf.title = "Index: \(index)"
+        }).disposed(by: disposeBag)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        services.cache.get(movieId: movieId).subscribe(onNext: { [weak self] movieItem in
-            guard let movieItem = movieItem else {
-                self?.presentError(message: "Failed to load movie details.")
-                return
-            }
-            self?.imageView.setImage(from: movieItem.imageUrl!)
-            self?.titleLabel.text = movieItem.title
-            self?.title = "Index: \(movieItem.index ?? -1)"
-        }).disposed(by: disposeBag)
+
+        services.cache.get(movieId: movieId)
+            .observeOn(MainScheduler.instance)
+            .bind(to: movieItem)
+            .disposed(by: disposeBag)
     }
 }
