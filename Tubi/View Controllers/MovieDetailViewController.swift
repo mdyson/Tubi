@@ -7,23 +7,25 @@
 //
 
 import UIKit
+import RxSwift
 
 class MovieDetailViewController: UIViewController {
-    let movieId: String
-    var cache: MovieCacheService
+    private let movieId: String
+    private let services: Services
+    private let disposeBag = DisposeBag()
 
-    let loadingSpinner = UIActivityIndicatorView(style: .whiteLarge)
-    let imageView = UIImageView()
-    let titleLabel: UILabel = {
+    private let loadingSpinner = UIActivityIndicatorView(style: .whiteLarge)
+    private let imageView = UIImageView()
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.font = .boldSystemFont(ofSize: 30)
         return label
     }()
     
-    init(movieId: String, cache: MovieCacheService) {
+    init(movieId: String, services: Services) {
         self.movieId = movieId
-        self.cache = cache
+        self.services = services
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -50,28 +52,18 @@ class MovieDetailViewController: UIViewController {
             make.centerX.equalTo(view)
             make.top.equalTo(imageView.snp_bottom).offset(10)
         }
-
-        if let movieItem = cache.get(key: movieId) {
-            imageView.setImage(from: movieItem.imageUrl!)
-            titleLabel.text = movieItem.title
-        } else {
-            makeRequest()
-        }
     }
 
-    func makeRequest() {
-        loadingSpinner.startAnimating()
-        TubiAPI().get(MovieItem.self, endpoint: TubiAPI.Endpoints.movie(id: movieId)) { [weak self] (movieItem, error) in
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        services.cache.get(movieId: movieId).subscribe(onNext: { [weak self] movieItem in
             guard let movieItem = movieItem else {
-                let alert = UIAlertController(title: "Error", message: "Failed to fetch movie details.", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default))
-                self?.present(alert, animated: true)
+                self?.presentError(message: "Failed to load movie details.")
                 return
             }
-            self?.loadingSpinner.stopAnimating()
             self?.imageView.setImage(from: movieItem.imageUrl!)
             self?.titleLabel.text = movieItem.title
-            self?.cache.add(key: movieItem.id, value: movieItem)
-        }
+            self?.title = "Index: \(movieItem.index ?? -1)"
+        }).disposed(by: disposeBag)
     }
 }

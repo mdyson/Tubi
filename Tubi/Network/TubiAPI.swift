@@ -6,7 +6,9 @@
 //  Copyright © 2019 Matthew Dyson. All rights reserved.
 //
 
+import Alamofire
 import Foundation
+import RxSwift
 
 class TubiAPI {
     enum APIError: Error {
@@ -16,30 +18,26 @@ class TubiAPI {
     
     enum Endpoints {
         static let movies = "https://us-central1-modern-venture-600.cloudfunctions.net/api/movies"
-        
-        static func movie(id: String) -> String {
+        static func movies(id: String) -> String {
             return "\(Endpoints.movies)/\(id)"
         }
     }
-    
-    func get<T>(_ type: T.Type, endpoint: String, response: @escaping (_ data: T?, _ error: Error?) -> Void) where T : Decodable {
-        guard let url = URL(string: endpoint) else {
-            response(nil, APIError.urlError)
-            return
-        }
-        URLSession.shared.dataTask(with: url) { data,_,_ in
-            if let data = data {
-                let decoder = JSONDecoder()
-                if let responseData = try? decoder.decode(type, from: data) {
-                    DispatchQueue.main.async {
-                        response(responseData, nil)
-                    }
-                } else {
-                    DispatchQueue.main.async {
-                        response(nil, APIError.responseError)
-                    }
+
+    let decoder = JSONDecoder()
+
+    func get<T>(_ type: T.Type, endpoint: String) -> Observable<T?> where T : Decodable {
+        return Observable.create({ observer -> Disposable in
+            Alamofire.request(endpoint).responseData { [weak self] response in
+                guard let data = response.result.value else {
+                    observer.on(.next(nil))
+                    return
+                }
+                let responseData = try? self?.decoder.decode(type, from: data)
+                DispatchQueue.main.async {
+                    observer.on(.next(responseData))
                 }
             }
-        }.resume()
+            return Disposables.create()
+        })
     }
 }

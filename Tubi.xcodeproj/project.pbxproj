@@ -13,8 +13,11 @@
 		C8056E352249F0AA00CEEE24 /* UIImageViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8056E342249F0AA00CEEE24 /* UIImageViewExtensions.swift */; };
 		C8056E382249F38800CEEE24 /* MovieItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8056E372249F38800CEEE24 /* MovieItem.swift */; };
 		C8056E3A2249F9B300CEEE24 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8056E392249F9B300CEEE24 /* MovieDetailViewController.swift */; };
-		C8103D6A224C95A1001D2E28 /* CacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8103D69224C95A1001D2E28 /* CacheService.swift */; };
-		C8103D6C224C95DD001D2E28 /* Caching.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8103D6B224C95DD001D2E28 /* Caching.swift */; };
+		C8103D6A224C95A1001D2E28 /* MovieService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8103D69224C95A1001D2E28 /* MovieService.swift */; };
+		C8103D6C224C95DD001D2E28 /* MovieCaching.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8103D6B224C95DD001D2E28 /* MovieCaching.swift */; };
+		C8103D6E224CA086001D2E28 /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8103D6D224CA086001D2E28 /* Services.swift */; };
+		C8103D70224CAF06001D2E28 /* UIAlertControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8103D6F224CAF06001D2E28 /* UIAlertControllerExtensions.swift */; };
+		C8103D72224CB238001D2E28 /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8103D71224CB238001D2E28 /* UIViewControllerExtensions.swift */; };
 		C8516E382249D588001E7A6C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8516E372249D588001E7A6C /* AppDelegate.swift */; };
 		C8516E3F2249D58B001E7A6C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8516E3E2249D58B001E7A6C /* Assets.xcassets */; };
 		C8516E422249D58B001E7A6C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C8516E402249D58B001E7A6C /* LaunchScreen.storyboard */; };
@@ -43,8 +46,11 @@
 		C8056E342249F0AA00CEEE24 /* UIImageViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewExtensions.swift; sourceTree = "<group>"; };
 		C8056E372249F38800CEEE24 /* MovieItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieItem.swift; sourceTree = "<group>"; };
 		C8056E392249F9B300CEEE24 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
-		C8103D69224C95A1001D2E28 /* CacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheService.swift; sourceTree = "<group>"; };
-		C8103D6B224C95DD001D2E28 /* Caching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Caching.swift; sourceTree = "<group>"; };
+		C8103D69224C95A1001D2E28 /* MovieService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieService.swift; sourceTree = "<group>"; };
+		C8103D6B224C95DD001D2E28 /* MovieCaching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCaching.swift; sourceTree = "<group>"; };
+		C8103D6D224CA086001D2E28 /* Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
+		C8103D6F224CAF06001D2E28 /* UIAlertControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertControllerExtensions.swift; sourceTree = "<group>"; };
+		C8103D71224CB238001D2E28 /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
 		C8516E342249D588001E7A6C /* Tubi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tubi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8516E372249D588001E7A6C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C8516E3E2249D58B001E7A6C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -112,6 +118,8 @@
 			isa = PBXGroup;
 			children = (
 				C8056E342249F0AA00CEEE24 /* UIImageViewExtensions.swift */,
+				C8103D6F224CAF06001D2E28 /* UIAlertControllerExtensions.swift */,
+				C8103D71224CB238001D2E28 /* UIViewControllerExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -127,8 +135,9 @@
 		C8103D68224C9585001D2E28 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				C8103D69224C95A1001D2E28 /* CacheService.swift */,
-				C8103D6B224C95DD001D2E28 /* Caching.swift */,
+				C8103D69224C95A1001D2E28 /* MovieService.swift */,
+				C8103D6B224C95DD001D2E28 /* MovieCaching.swift */,
+				C8103D6D224CA086001D2E28 /* Services.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -321,12 +330,20 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tubi/Pods-Tubi-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/RxAtomic/RxAtomic.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAtomic.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -388,12 +405,15 @@
 				C8516E582249D72C001E7A6C /* LRUCache.swift in Sources */,
 				C8516E622249E819001E7A6C /* MoviesViewController.swift in Sources */,
 				C8056E382249F38800CEEE24 /* MovieItem.swift in Sources */,
-				C8103D6C224C95DD001D2E28 /* Caching.swift in Sources */,
+				C8103D72224CB238001D2E28 /* UIViewControllerExtensions.swift in Sources */,
+				C8103D6E224CA086001D2E28 /* Services.swift in Sources */,
+				C8103D6C224C95DD001D2E28 /* MovieCaching.swift in Sources */,
 				C8056E322249EA1F00CEEE24 /* MovieCollectionViewCell.swift in Sources */,
 				C8056E3A2249F9B300CEEE24 /* MovieDetailViewController.swift in Sources */,
 				C8516E602249DFB9001E7A6C /* TubiAPI.swift in Sources */,
 				C8056E352249F0AA00CEEE24 /* UIImageViewExtensions.swift in Sources */,
-				C8103D6A224C95A1001D2E28 /* CacheService.swift in Sources */,
+				C8103D6A224C95A1001D2E28 /* MovieService.swift in Sources */,
+				C8103D70224CAF06001D2E28 /* UIAlertControllerExtensions.swift in Sources */,
 				C8516E382249D588001E7A6C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

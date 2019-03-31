@@ -7,6 +7,8 @@
 //
 
 import SnapKit
+import RxCocoa
+import RxSwift
 import UIKit
 
 class MovieCollectionViewCell: UICollectionViewCell {
@@ -18,6 +20,9 @@ class MovieCollectionViewCell: UICollectionViewCell {
         label.textColor = .white
         return label
     }()
+
+    let disposeBag = DisposeBag()
+    let movieItem = BehaviorRelay<MovieItem?>(value: nil)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -36,16 +41,16 @@ class MovieCollectionViewCell: UICollectionViewCell {
             make.top.equalTo(imageView.snp_bottom).offset(5)
             make.bottom.equalTo(contentView.snp_bottom)
         }
+
+        movieItem.asObservable().subscribe(onNext: { [weak self] movieItem in
+            if let imageUrl = movieItem?.imageUrl {
+                self?.imageView.setImage(from: imageUrl)
+            }
+            self?.titleLabel.text = movieItem?.title
+        }).disposed(by: disposeBag)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    func configure(movieItem: MovieItem) {
-        if let imageUrl = movieItem.imageUrl {
-            imageView.setImage(from: imageUrl)
-        }
-        titleLabel.text = movieItem.title
     }
 }

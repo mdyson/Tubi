@@ -12,10 +12,12 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
+    let services = Services()
+
     func applicationDidFinishLaunching(_ application: UIApplication) {
         window = UIWindow()
         window?.makeKeyAndVisible()
-        window?.rootViewController = UINavigationController(rootViewController: MoviesViewController())
+        window?.rootViewController = UINavigationController(rootViewController: MoviesViewController(services: services))
     }
 }
 

@@ -7,9 +7,8 @@
 //
 
 import Foundation
+import RxSwift
 
-protocol Caching {
-    func add(key: String, value: MovieItem)
-    func get(key: String) -> MovieItem?
-    func isValid(key: String) -> Bool
+protocol MovieCaching {
+    func get(movieId: String) -> Observable<MovieItem?>
 }

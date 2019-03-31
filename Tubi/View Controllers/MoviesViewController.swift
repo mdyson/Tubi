@@ -7,18 +7,30 @@
 //
 
 import UIKit
+import RxCocoa
+import RxSwift
 
-class MoviesViewController: UICollectionViewController {
+class MoviesViewController: UIViewController {
     private let reuseIdentifier = "MovieCell"
     private let itemsPerRow = 2
-    private let sectionInsets = UIEdgeInsets(top: 20.0, left: 20.0, bottom: 20.0, right: 20.0)
+
+    private let services: Services
+    private let movies = BehaviorRelay<[MovieItem]>(value: [])
+    private let disposeBag = DisposeBag()
+
+    private let collectionView: UICollectionView = {
+        let sectionInsets = UIEdgeInsets(top: 20.0, left: 20.0, bottom: 20.0, right: 20.0)
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = sectionInsets
+        layout.minimumLineSpacing = sectionInsets.left
+        return UICollectionView(frame: .zero, collectionViewLayout: layout)
+    }()
+    private let loadingSpinner = UIActivityIndicatorView(style: .whiteLarge)
     
-    private var movies = [MovieItem]()
-    private var movieCacheService = MovieCacheService()
-    
-    init() {
-        super.init(collectionViewLayout: UICollectionViewFlowLayout())
+    init(services: Services) {
+        self.services = services
         collectionView.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        super.init(nibName: nil, bundle:nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -29,59 +41,46 @@ class MoviesViewController: UICollectionViewController {
         super.viewDidLoad()
         collectionView.backgroundColor = .purple
         title = "Movies"
-        
-        TubiAPI().get([MovieItem].self, endpoint: TubiAPI.Endpoints.movies) { [weak self] (movies, error) in
+
+        view.addSubview(collectionView)
+        view.addSubview(loadingSpinner)
+        collectionView.snp.makeConstraints { make in
+            make.edges.equalTo(view)
+        }
+        loadingSpinner.snp.makeConstraints { make in
+            make.center.equalTo(view)
+        }
+
+        loadingSpinner.startAnimating()
+        services.api.get([MovieItem].self, endpoint: TubiAPI.Endpoints.movies).subscribe(onNext: { [weak self] movies in
             guard let movies = movies else {
+                self?.presentError(message: "Failed to load movies.")
                 return
             }
-            self?.movies = movies
+            self?.movies.accept(movies)
+            self?.loadingSpinner.stopAnimating()
             self?.collectionView.reloadData()
-        }
-    }
-}
+        }).disposed(by: disposeBag)
 
-// MARK: - UICollectionViewDelegate
-extension MoviesViewController {
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let movieItem = movies[indexPath.item]
-        navigationController?.pushViewController(MovieDetailViewController(movieId: movieItem.id, cache: movieCacheService), animated: true)
-    }
-}
+        collectionView.rx.modelSelected(MovieItem.self).asObservable().subscribe(onNext: { movieItem in
+            self.navigationController?.pushViewController(MovieDetailViewController(movieId: movieItem.id, services: self.services), animated: true)
+        }).disposed(by: disposeBag)
 
-// MARK: - UICollectionViewDataSource
-extension MoviesViewController {
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return movies.count
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-        if let cell = cell as? MovieCollectionViewCell {
-            cell.configure(movieItem: movies[indexPath.item])
-        }
-        return cell
+        movies.asObservable().bind(to: collectionView.rx.items(cellIdentifier: reuseIdentifier, cellType: MovieCollectionViewCell.self)) { index, model, cell in
+            cell.movieItem.accept(model)
+        }.disposed(by: disposeBag)
+
+        collectionView.rx.setDelegate(self).disposed(by: disposeBag)
     }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
 extension MoviesViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let paddingSpace = sectionInsets.left * CGFloat(itemsPerRow + 1)
+        let paddingSpace = (collectionViewLayout as! UICollectionViewFlowLayout).sectionInset.left * CGFloat(itemsPerRow + 1)
         let availableWidth = collectionView.frame.width - paddingSpace
         let widthPerItem = availableWidth / CGFloat(itemsPerRow)
         
         return CGSize(width: widthPerItem, height: widthPerItem * 1.5)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return sectionInsets
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return sectionInsets.left
     }
 }
