@@ -21,3 +21,11 @@ extension UIImageView {
             .bind(to: rx.image)
     }
 }
+
+extension Reactive where Base: UIImageView {
+    public var imageURL: Binder<URL> {
+        return Binder(base) { imageView, url in
+            _ = imageView.setImage(from: url)
+        }
+    }
+}

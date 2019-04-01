@@ -11,8 +11,6 @@ import RxCocoa
 import RxSwift
 
 class MovieDetailViewController: UIViewController {
-    private let movieId: String
-    private let services: Services
     private let disposeBag = DisposeBag()
 
     private let loadingSpinner = UIActivityIndicatorView(style: .whiteLarge)
@@ -24,14 +22,13 @@ class MovieDetailViewController: UIViewController {
         return label
     }()
 
-    private var movieItem = BehaviorRelay<MovieItem?>(value: nil)
+    private let viewModel: MovieDetailViewModel
 
-    init(movieId: String, services: Services) {
-        self.movieId = movieId
-        self.services = services
+    init(viewModel: MovieDetailViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -40,11 +37,23 @@ class MovieDetailViewController: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = .purple
+        addSubviews()
+        makeConstraints()
+        setupBindings()
+    }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.makeRequest()
+    }
+
+    func addSubviews() {
         view.addSubview(loadingSpinner)
         view.addSubview(imageView)
         view.addSubview(titleLabel)
+    }
 
+    func makeConstraints() {
         loadingSpinner.snp.makeConstraints { make in
             make.center.equalTo(view)
         }
@@ -55,26 +64,23 @@ class MovieDetailViewController: UIViewController {
             make.centerX.equalTo(view)
             make.top.equalTo(imageView.snp_bottom).offset(10)
         }
-
-        movieItem.asObservable().subscribe(onNext: { [weak self] movieItem in
-            guard let strongSelf = self,
-                let movieItem = movieItem,
-                let imageUrl = movieItem.imageUrl,
-                let index = movieItem.index else {
-                return
-            }
-            strongSelf.imageView.setImage(from: imageUrl).disposed(by: strongSelf.disposeBag)
-            strongSelf.titleLabel.text = movieItem.title
-            strongSelf.title = "Index: \(index)"
-        }).disposed(by: disposeBag)
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    func setupBindings() {
+        viewModel.movieItem
+            .map { $0?.imageUrl }
+            .flatMap({ Observable.from(optional: $0) })
+            .bind(to: imageView.rx.imageURL)
+            .disposed(by: disposeBag)
 
-        services.cache.get(movieId: movieId)
-            .observeOn(MainScheduler.instance)
-            .bind(to: movieItem)
+        viewModel.movieItem
+            .map({ $0?.title })
+            .bind(to: titleLabel.rx.text )
+            .disposed(by: disposeBag)
+
+        viewModel.movieItem
+            .map({ "Index: \($0?.index ?? -1)" })
+            .bind(onNext: { self.title = $0 })
             .disposed(by: disposeBag)
     }
 }

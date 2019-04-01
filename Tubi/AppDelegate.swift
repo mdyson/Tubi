@@ -17,7 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidFinishLaunching(_ application: UIApplication) {
         window = UIWindow()
         window?.makeKeyAndVisible()
-        window?.rootViewController = UINavigationController(rootViewController: MoviesViewController(services: services))
+        window?.rootViewController = UINavigationController(rootViewController: MoviesViewController(viewModel: MoviesViewModel(services: services)))
     }
 }
-

@@ -6,16 +6,15 @@
 //  Copyright © 2019 Matthew Dyson. All rights reserved.
 //
 
-import UIKit
 import RxCocoa
 import RxSwift
+import UIKit
 
 class MoviesViewController: UIViewController {
     private let reuseIdentifier = "MovieCell"
     private let itemsPerRow = 2
 
-    private let services: Services
-    private let movies = BehaviorRelay<[MovieItem]>(value: [])
+    private let viewModel: MoviesViewModel
     private let disposeBag = DisposeBag()
 
     private let collectionView: UICollectionView = {
@@ -27,10 +26,10 @@ class MoviesViewController: UIViewController {
     }()
     private let loadingSpinner = UIActivityIndicatorView(style: .whiteLarge)
     
-    init(services: Services) {
-        self.services = services
+    init(viewModel: MoviesViewModel) {
+        self.viewModel = viewModel
         collectionView.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        super.init(nibName: nil, bundle:nil)
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -42,38 +41,41 @@ class MoviesViewController: UIViewController {
         collectionView.backgroundColor = .purple
         title = "Movies"
 
+        addSubviews()
+        makeConstraints()
+        setupBindings()
+        viewModel.makeRequest()
+    }
+
+    func addSubviews() {
         view.addSubview(collectionView)
         view.addSubview(loadingSpinner)
+    }
+
+    func makeConstraints() {
         collectionView.snp.makeConstraints { make in
             make.edges.equalTo(view)
         }
         loadingSpinner.snp.makeConstraints { make in
             make.center.equalTo(view)
         }
+    }
 
-        loadingSpinner.startAnimating()
-        services.api.get([MovieItem].self, endpoint: TubiAPI.Endpoints.movies)
-            .do(onError: { error in
-                self.presentError(message: "Failed to load movies.")
-                self.loadingSpinner.stopAnimating()
-            }, onCompleted: {
-                self.loadingSpinner.stopAnimating()
-            })
-            .catchErrorJustReturn(nil)
-            .flatMap({ Observable.from(optional: $0) })
-            .bind(to: movies)
+    func setupBindings() {
+        viewModel.loadingObservable
+            .asObservable()
+            .bind(to: loadingSpinner.rx.isAnimating)
             .disposed(by: disposeBag)
-
-        movies.asObservable()
+        viewModel.movies.asObservable()
             .bind(to: collectionView.rx.items(cellIdentifier: reuseIdentifier, cellType: MovieCollectionViewCell.self)) { _, model, cell in
                 cell.movieItem.accept(model)
-        }.disposed(by: disposeBag)
+            }.disposed(by: disposeBag)
 
-        collectionView.rx.modelSelected(MovieItem.self).asObservable().subscribe(onNext: { movieItem in
-            let movieDetailVC = MovieDetailViewController(movieId: movieItem.id, services: self.services)
+        collectionView.rx.modelSelected(MovieItem.self).asObservable().subscribe(onNext: { [viewModel] movieItem in
+            let movieDetailViewModel = MovieDetailViewModel(movieId: movieItem.id, services: viewModel.services)
+            let movieDetailVC = MovieDetailViewController(viewModel: movieDetailViewModel)
             self.navigationController?.pushViewController(movieDetailVC, animated: true)
         }).disposed(by: disposeBag)
-
         collectionView.rx.setDelegate(self).disposed(by: disposeBag)
     }
 }
