@@ -52,23 +52,25 @@ class MoviesViewController: UIViewController {
         }
 
         loadingSpinner.startAnimating()
-        services.api.get([MovieItem].self, endpoint: TubiAPI.Endpoints.movies).subscribe(onNext: { [weak self] movies in
-            guard let movies = movies else {
-                self?.presentError(message: "Failed to load movies.")
-                return
-            }
-            self?.movies.accept(movies)
-            self?.loadingSpinner.stopAnimating()
-            self?.collectionView.reloadData()
-        }).disposed(by: disposeBag)
+        services.api.get([MovieItem].self, endpoint: TubiAPI.Endpoints.movies)
+            .do(onError: { error in
+                self.presentError(message: "Failed to load movies.")
+            }, onCompleted: {
+                self.loadingSpinner.stopAnimating()
+            })
+            .flatMap({ Observable.from(optional: $0) })
+            .bind(to: movies)
+            .disposed(by: disposeBag)
+
+        movies.asObservable()
+            .bind(to: collectionView.rx.items(cellIdentifier: reuseIdentifier, cellType: MovieCollectionViewCell.self)) { _, model, cell in
+                cell.movieItem.accept(model)
+        }.disposed(by: disposeBag)
 
         collectionView.rx.modelSelected(MovieItem.self).asObservable().subscribe(onNext: { movieItem in
-            self.navigationController?.pushViewController(MovieDetailViewController(movieId: movieItem.id, services: self.services), animated: true)
+            let movieDetailVC = MovieDetailViewController(movieId: movieItem.id, services: self.services)
+            self.navigationController?.pushViewController(movieDetailVC, animated: true)
         }).disposed(by: disposeBag)
-
-        movies.asObservable().bind(to: collectionView.rx.items(cellIdentifier: reuseIdentifier, cellType: MovieCollectionViewCell.self)) { index, model, cell in
-            cell.movieItem.accept(model)
-        }.disposed(by: disposeBag)
 
         collectionView.rx.setDelegate(self).disposed(by: disposeBag)
     }
@@ -80,7 +82,7 @@ extension MoviesViewController: UICollectionViewDelegateFlowLayout {
         let paddingSpace = (collectionViewLayout as! UICollectionViewFlowLayout).sectionInset.left * CGFloat(itemsPerRow + 1)
         let availableWidth = collectionView.frame.width - paddingSpace
         let widthPerItem = availableWidth / CGFloat(itemsPerRow)
-        
+
         return CGSize(width: widthPerItem, height: widthPerItem * 1.5)
     }
 }

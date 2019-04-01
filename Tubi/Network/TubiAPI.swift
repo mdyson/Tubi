@@ -27,8 +27,10 @@ class TubiAPI {
         guard let url = URL(string: endpoint) else {
             return Observable.error(APIError.urlError)
         }
-        return URLSession.shared.rx.data(request: URLRequest(url: url)).map({ data -> T? in
-            return try? JSONDecoder().decode(type, from: data)
-        }).observeOn(MainScheduler.instance)
+        return URLSession.shared.rx.data(request: URLRequest(url: url))
+            .map({ data -> T? in
+                return try? JSONDecoder().decode(type, from: data)
+            })
+            .observeOn(MainScheduler.instance)
     }
 }

@@ -22,7 +22,13 @@ class MovieService: MovieCaching {
             if let movieItem = self.cache.get(key: movieId) {
                 observer.on(.next(movieItem))
             } else {
-                return self.api.get(MovieItem.self, endpoint: TubiAPI.Endpoints.movies(id: movieId)).subscribe(observer)
+                return self.api.get(MovieItem.self, endpoint: TubiAPI.Endpoints.movies(id: movieId))
+                    .do(onNext: { [weak self] (movieItem) in
+                        if let movieItem = movieItem {
+                            self?.cache.add(key: movieId, value: movieItem)
+                        }
+                    })
+                    .subscribe(observer)
             }
             return Disposables.create()
         }
