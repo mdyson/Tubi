@@ -55,9 +55,11 @@ class MoviesViewController: UIViewController {
         services.api.get([MovieItem].self, endpoint: TubiAPI.Endpoints.movies)
             .do(onError: { error in
                 self.presentError(message: "Failed to load movies.")
+                self.loadingSpinner.stopAnimating()
             }, onCompleted: {
                 self.loadingSpinner.stopAnimating()
             })
+            .catchErrorJustReturn(nil)
             .flatMap({ Observable.from(optional: $0) })
             .bind(to: movies)
             .disposed(by: disposeBag)

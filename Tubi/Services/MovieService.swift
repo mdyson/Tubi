@@ -28,6 +28,7 @@ class MovieService: MovieCaching {
                             self?.cache.add(key: movieId, value: movieItem)
                         }
                     })
+                    .catchErrorJustReturn(nil)
                     .subscribe(observer)
             }
             return Disposables.create()
